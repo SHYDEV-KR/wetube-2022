@@ -7,10 +7,16 @@
     "type": "git",
     "url": "git+https://github.com/SHYDEV-KR/wetube-2022.git"
   },
+  "scripts": {
+    "win": "node index.js"
+  },
   "author": "SHYDEV",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/SHYDEV-KR/wetube-2022/issues"
   },
-  "homepage": "https://github.com/SHYDEV-KR/wetube-2022#readme"
+  "homepage": "https://github.com/SHYDEV-KR/wetube-2022#readme",
+  "dependencies": {
+    "express": "^4.18.1"
+  }
 }
