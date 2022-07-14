@@ -112,6 +112,7 @@ export const finishGithubLogin = async (req, res) => {
         if (!user) {
             user = await User.create({
                 name: userData.name,
+                avatarUrl: userData.avater_url,
                 username: userData.login,
                 email: emailObj.email,
                 password: "",
