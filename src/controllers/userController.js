@@ -138,8 +138,38 @@ export const getEdit = (req, res) => {
     res.render("edit-profile", {pageTitle: "Edit Profile"});
 }
 
-export const postEdit = (req, res) => {
-    res.render("edit-profile");
+export const postEdit = async (req, res) => {
+    const {
+        session: {
+            user: { _id },
+        },
+        body: { name, email, username, location, }
+    } = req;
+
+    if (req.session.user.email !== email) {
+        const exists = await User.exists({ email });
+        if (exists) {
+            return res.redirect("/users/edit");
+        }
+    }
+    
+    if (req.session.user.username !== username) {
+        const exists = await User.exists({ username });
+        if (exists) {
+            return res.redirect("/users/edit");
+        }
+    }
+
+    const updatedUser = await User.findByIdAndUpdate(
+        _id,
+        {
+        name, email, username, location,
+        },
+        { new: true }
+    );
+
+    req.session.user = updatedUser;
+    return res.redirect("/users/edit");
 }
 
 export const see = (req, res) => res.send("See User");
