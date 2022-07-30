@@ -2,8 +2,6 @@ import axios from "axios";
 import * as cheerio from 'cheerio';
 import Chart from "../models/Chart";
 
-
-
 const crawlMelonChart = async () => {
     const url = "https://www.melon.com/chart/index.htm";
     const getHtml = async () => {
@@ -13,6 +11,10 @@ const crawlMelonChart = async () => {
             console.error(error);
         }
     };
+    
+    let body = await getHtml();
+    body = cheerio.load(body.data);
+    
     const selectorTitle = (x) => {
         return `#lst${x} > td:nth-child(6) > div > div > div.ellipsis.rank01 > span > a`;
     }
@@ -21,13 +23,8 @@ const crawlMelonChart = async () => {
         return `#lst${x} > td:nth-child(6) > div > div > div.ellipsis.rank02 > span`;
     }
     
-    let body = await getHtml();
-    body = cheerio.load(body.data);
-    
     let titles = [];
     let artists = [];
-    let result = [];
-
     for (const i of [50, 100]) {
         body(selectorTitle(i)).each((index, elem) => {
             titles.push(body(elem).text());
@@ -38,6 +35,7 @@ const crawlMelonChart = async () => {
         });
     }
     
+    let result = [];
     for (let i = 0; i < 100; i++) {
         result.push(JSON.stringify({index: i + 1, title: titles[i],artist: artists[i]}));
     }
