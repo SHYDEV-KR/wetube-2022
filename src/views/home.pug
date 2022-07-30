@@ -1,8 +1,15 @@
 extends base
 include mixins/video
+include mixins/song
 
 block content
     each video in videos
         +video(video)
     else
         li Sorry nothing found.
+
+    small=time
+    each song in melonChart
+        +song(song)
+    else 
+        li Sorry Nothing Found.

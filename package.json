@@ -17,7 +17,9 @@
   },
   "homepage": "https://github.com/SHYDEV-KR/wetube-2022#readme",
   "dependencies": {
+    "axios": "^0.27.2",
     "bcrypt": "^5.0.1",
+    "cheerio": "^1.0.0-rc.12",
     "connect-mongo": "^4.6.0",
     "cross-fetch": "^3.1.5",
     "dotenv": "^16.0.1",

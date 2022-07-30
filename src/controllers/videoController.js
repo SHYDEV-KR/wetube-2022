@@ -1,10 +1,16 @@
 import Video from "../models/Video";
 import User from "../models/User";
+import Chart from "../models/Chart";
 
 
 export const home = async (req, res) => {
-    const videos = await Video.find({}).sort({createdAt:"desc"});
-    return res.render("home", { pageTitle: "Home", videos });
+    const videos = await Video.find({}).sort({ createdAt: "desc" });
+    const charts = await Chart.find({ companyName: 'melon' });
+    let melonChart = [];
+    for (const song of charts[0].chart) {
+        melonChart.push(JSON.parse(song));
+    }
+    return res.render("home", { pageTitle: "Home", videos, melonChart, time: charts[0].createdAt });
 };
 
 export const watch = async (req, res) => {
