@@ -6,7 +6,7 @@ const crawlMelonChart = async () => {
     const url = "https://www.melon.com/chart/index.htm";
     const getHtml = async () => {
         try {
-            return await axios.get(url);    
+            return await axios.get(url);
         } catch (error) {
             console.error(error);
         }
@@ -22,9 +22,14 @@ const crawlMelonChart = async () => {
     const selectorArtist = (x) => {
         return `#lst${x} > td:nth-child(6) > div > div > div.ellipsis.rank02 > span`;
     }
+
+    const selectorCoverImg = (x) => {
+        return `#lst${x} > td:nth-child(4) > div > a > img`;
+    }
     
     let titles = [];
     let artists = [];
+    let covers = [];
     for (const i of [50, 100]) {
         body(selectorTitle(i)).each((index, elem) => {
             titles.push(body(elem).text());
@@ -33,11 +38,15 @@ const crawlMelonChart = async () => {
         body(selectorArtist(i)).each((index, elem) => {
             artists.push(body(elem).text());
         });
+
+        body(selectorCoverImg(i)).each((index, elem) => {
+            covers.push(body(elem).attr('src'));
+        });
     }
     
     let result = [];
     for (let i = 0; i < 100; i++) {
-        result.push(JSON.stringify({index: i + 1, title: titles[i],artist: artists[i]}));
+        result.push(JSON.stringify({index: i + 1, title: titles[i], artist: artists[i], cover: covers[i]}));
     }
 
     const exists = await Chart.exists({ companyName: 'melon' });

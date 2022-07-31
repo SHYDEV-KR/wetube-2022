@@ -1,4 +1,5 @@
 mixin song(songData)
     div
-        h5 #{songData.index}. #{songData.title} 
+        img(src=songData.cover, width="35", height="35") 
+        strong #{songData.index} #{songData.title} 
             small=songData.artist
