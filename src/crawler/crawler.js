@@ -46,27 +46,32 @@ const crawlMelonChart = async () => {
     
     let result = [];
     for (let i = 0; i < 100; i++) {
-        result.push(JSON.stringify({index: i + 1, title: titles[i], artist: artists[i], cover: covers[i]}));
+        result.push(JSON.stringify({ index: i + 1, title: titles[i], artist: artists[i], cover: covers[i] }));
     }
 
-    const exists = await Chart.exists({ companyName: 'melon' });
-    if (!exists) {
-        try {
-            await Chart.create({
-                companyName: 'melon',
-                chart: result,
-            });
-            console.log("✅ New Melon Chart Created!");
-        } catch(error) {
-            console.log(error);
-        }
-    } else {
-        const melonChart = await Chart.find({ companyName: 'melon' });
-        melonChart[0].chart = result;
-        melonChart[0].createdAt = Date.now();
-        await melonChart[0].save();
-        console.log("✅ Melon Chart Updated at Hour", melonChart[0].createdAt.getHours());
+    return result;
+}
+
+const saveNewChart = async (companyName, result) => {
+    const now = new Date();
+    try {
+        await Chart.create({
+            companyName,
+            createdAt: now,
+            chart: result,
+        });
+        console.log(`✅ New ${companyName} Chart Created At ${now.getHours()}!`);
+    } catch (error) {
+        console.log(error);
     }
+}
+
+const updateChart = async (companyName, result) => {
+    const chart = await Chart.find({ companyName });
+    chart[0].chart = result;
+    chart[0].createdAt = Date.now();
+    await chart[0].save();
+    console.log(`✅ ${companyName} Chart Updated at Hour`, chart[0].createdAt.getHours());
 }
 
 const checkTimeAndCrawl = async () => {
@@ -74,12 +79,14 @@ const checkTimeAndCrawl = async () => {
     let min = now.getMinutes();
     let sec = now.getSeconds();
     const exists = await Chart.exists({ companyName: 'melon' });
-    if (!exists || (String(min) === "0" && String(sec) === "10")) {
-        crawlMelonChart();
-    } else if (exists) {
+    if (!exists) {
+        const result = await crawlMelonChart();
+        saveNewChart('melon', result);
+    } else {
         const melonChart = await Chart.find({ companyName: 'melon' });
-        if (melonChart[0].createdAt.getHours() !== now.getHours()) {
-            crawlMelonChart();
+        if ((String(min) === "0" && String(sec) === "10") || (melonChart[0].createdAt.getHours() !== now.getHours())) {
+            const result = await crawlMelonChart();
+            await updateChart('melon', result);
         }
     }
 }
