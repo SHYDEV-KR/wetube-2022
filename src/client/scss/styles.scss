@@ -1,4 +1,20 @@
-@import "./_variables";
+// Config
+@import "./config/_variables.scss";
+@import "./config/_reset.scss";
+
+// Components
+@import "./components/header.scss";
+
+
+// Screens
+
+// Defaults
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
 body {
     background-color: $main;
     color: $font;
