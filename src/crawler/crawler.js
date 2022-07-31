@@ -60,12 +60,18 @@ const crawlMelonChart = async () => {
     }
 }
 
-const checkTimeAndCrawl = () => {
+const checkTimeAndCrawl = async () => {
     let now = new Date();
     let min = now.getMinutes();
     let sec = now.getSeconds();
-    if (String(min) === "0" && String(sec) === "3") {
+    const exists = await Chart.exists({ companyName: 'melon' });
+    if (!exists || (String(min) === "0" && String(sec) === "3")) {
         crawlMelonChart();
+    } else if (exists) {
+        const melonChart = await Chart.find({ companyName: 'melon' });
+        if (melonChart[0].createdAt.getHours() !== now.getHours()) {
+            crawlMelonChart();
+        }
     }
 }
 
