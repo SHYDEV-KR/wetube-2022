@@ -8,8 +8,8 @@
     "url": "git+https://github.com/SHYDEV-KR/wetube-2022.git"
   },
   "scripts": {
-    "dev": "nodemon --exec babel-node src/init.js",
-    "assets": "webpack --config webpack.config.js"
+    "dev:server": "nodemon",
+    "dev:assets": "webpack"
   },
   "author": "SHYDEV",
   "license": "MIT",
