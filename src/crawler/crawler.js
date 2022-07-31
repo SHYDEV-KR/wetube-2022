@@ -74,7 +74,7 @@ const checkTimeAndCrawl = async () => {
     let min = now.getMinutes();
     let sec = now.getSeconds();
     const exists = await Chart.exists({ companyName: 'melon' });
-    if (!exists || (String(min) === "0" && String(sec) === "3")) {
+    if (!exists || (String(min) === "0" && String(sec) === "10")) {
         crawlMelonChart();
     } else if (exists) {
         const melonChart = await Chart.find({ companyName: 'melon' });
