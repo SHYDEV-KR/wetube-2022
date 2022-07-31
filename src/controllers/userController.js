@@ -1,5 +1,4 @@
 import User from "../models/User";
-import Video from "../models/Video";
 import fetch from "cross-fetch";
 import bcrypt from "bcrypt";
 
@@ -114,7 +113,7 @@ export const finishGithubLogin = async (req, res) => {
         if (!user) {
             user = await User.create({
                 name: userData.name,
-                avatarUrl: userData.avater_url,
+                avatarUrl: userData.avatar_url,
                 username: userData.login,
                 email: emailObj.email,
                 password: "",
@@ -211,7 +210,13 @@ export const postChangePassword = async (req, res) => {
 
 export const see = async (req, res) => {
     const { id } = req.params;
-    const user = await User.findById(id).populate("videos");
+    const user = await User.findById(id).populate({
+        path: "videos",
+        populate: {
+            path: "owner",
+            model: "User",
+        },
+    });
     console.log(user);
     if (!user) {
         return res.status(404).render("404", { pageTitle: "User not found." });

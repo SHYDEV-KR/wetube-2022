@@ -4,7 +4,7 @@ import Chart from "../models/Chart";
 
 
 export const home = async (req, res) => {
-    const videos = await Video.find({}).sort({ createdAt: "desc" });
+    const videos = await Video.find({}).sort({ createdAt: "desc" }).populate("owner");
     const charts = await Chart.find({ companyName: 'melon' });
     let melonChart = [];
     for (const song of charts[0].chart) {
@@ -121,7 +121,7 @@ export const search = async (req, res) => {
             title: {
                 $regex : new RegExp(keyword, "i"),
             }
-        });
+        }).populate("owner");
     }
     return res.render("search", {pageTitle: "Search", videos});
 }
