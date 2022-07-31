@@ -1,19 +1,11 @@
 extends base
 include mixins/video
-include mixins/song
 
 block content
-    each video in videos
-        +video(video)
-    else
-        li Sorry nothing found.
+    div.video-grid
+        each video in videos
+            +video(video)
+        else
+            span.empty__message No videos found
     
-    hr
-    div(id="melonTop100")
-        h4 Melon Top 100 Chart 
-            br
-            small - Updated at #{time.getMonth() + 1}.#{time.getDate()} #{String(time.getHours()).padStart(2, '0')}:00
-        each song in melonChart
-            +song(song)
-        else 
-            li Chart Not Available
+    include partials/melon-chart
