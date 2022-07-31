@@ -62,7 +62,7 @@ header {
   align-items: center;
 }
 header .header__logo {
-  color: #cc0d00;
+  color: #ff1300;
   font-size: 38px;
 }
 header ul {
@@ -173,7 +173,7 @@ input[type=submit],
   border-radius: 5px;
   padding: 12px 20px;
   background-color: white;
-  color: #cc0d00;
+  color: #ff1300;
   text-align: center;
   cursor: pointer;
   display: block;
@@ -187,6 +187,78 @@ input[type=submit],
 .social-login .social__btn--github {
   background-color: transparent;
   color: azure;
+}
+
+.chart-grid {
+  position: fixed;
+  right: 10px;
+  top: 91vh;
+  width: 400px;
+  height: 80vh;
+  z-index: 99;
+  display: grid;
+  gap: 5px;
+  border: 1px solid white;
+  border-radius: 5px;
+  overflow-y: scroll;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  background-color: #0e1117;
+  transition: 0.5s;
+  transition-delay: 1s;
+}
+.chart-grid::-webkit-scrollbar {
+  display: none; /* Chrome , Safari , Opera */
+}
+.chart-grid:hover {
+  top: 19vh;
+  transition: 0.3s;
+}
+.chart-grid .chart-ct {
+  position: relative;
+}
+.chart-grid .chart-title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 20px;
+  font-weight: bold;
+  border-bottom: 1px solid white;
+  padding: 15px 0;
+  background-color: #0e1117;
+}
+.chart-grid .chart-title .chart-title__time {
+  font-weight: lighter;
+  font-size: 15px;
+  margin-top: 5px;
+}
+.chart-grid .song {
+  height: max-content;
+  padding: 5px 10px;
+  display: flex;
+  align-items: center;
+  border-bottom: 0.5px solid white;
+}
+.chart-grid .song img {
+  border-radius: 5px;
+  margin-right: 10px;
+}
+.chart-grid .song .song__index {
+  font-size: 20px;
+  font-style: italic;
+  margin-right: 10px;
+}
+.chart-grid .song .song__info {
+  display: flex;
+  flex-direction: column;
+}
+.chart-grid .song .song__info :first-of-type {
+  font-weight: bold;
+  margin-bottom: 3px;
+}
+.chart-grid .song .song__info :last-of-type {
+  font-weight: lighter;
+  font-size: 14px;
 }
 
 .search__form {
@@ -245,6 +317,10 @@ form label {
 }
 .edit-profile__password a {
   text-decoration: underline;
+}
+
+video {
+  max-width: 100%;
 }
 
 a {

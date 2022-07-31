@@ -1,0 +1,81 @@
+.chart-grid {
+    position: fixed;
+    right: 10px;
+    top: 91vh;
+    width: 400px;
+    height: 80vh;
+    z-index: 99;
+    display: grid;
+    gap: 5px;
+    border: 1px solid white;
+    border-radius: 5px;
+    overflow-y: scroll;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+    &::-webkit-scrollbar {
+        display: none; /* Chrome , Safari , Opera */
+    }
+    background-color: $bg;
+    &:hover {
+        top: 19vh;
+        transition: 0.3s;
+    }
+    transition: 0.5s;
+    transition-delay: 1s;
+
+    .chart-ct {
+        position: relative;
+    }
+
+    .chart-title {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-size: 20px;
+        font-weight: bold;
+        border-bottom: 1px solid white;
+        padding: 15px 0 ;
+        background-color: $bg;
+
+        .chart-title__time {
+            font-weight: lighter;
+            font-size: 15px;
+            margin-top: 5px;
+        }
+    }
+
+
+    .song {
+        height: max-content;
+        padding: 5px 10px;
+        display: flex;
+        align-items: center;
+        border-bottom: 0.5px solid white;
+
+        img {
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        .song__index {
+            font-size: 20px;
+            font-style: italic;
+            margin-right: 10px;
+        }
+
+        .song__info {
+            display: flex;
+            flex-direction: column;
+            :first-of-type {
+                font-weight: bold;
+                margin-bottom: 3px;
+            }
+            :last-of-type {
+                font-weight: lighter;
+                font-size: 14px;
+            }
+        }
+    }
+    
+
+}

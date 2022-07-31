@@ -3,6 +3,9 @@ header
         i.fab.fa-youtube
     nav
         ul
+            li
+                a(href="/search")
+                    i.fas.fa-search
             if loggedIn
                 li
                     a(href="/videos/upload") Upload Video
@@ -12,19 +15,13 @@ header
                     a(href="/users/logout")  Log Out
                 li
                     a(href=`/users/${loggedInUser._id}`)
-                        if loggedInUser.avatarUrl === ""
-                            span 😀
+                        if !loggedInUser.avatarUrl
+                            img.header__avatar(src="/uploads/avatars/default.png")
                         else
-                            if loggedInUser.socialOnly 
-                                img.header__avatar(src=loggedInUser.avatarUrl)
-                            else
-                                img.header__avatar(src="/" + loggedInUser.avatarUrl)
+                            img.header__avatar(src=loggedInUser.avatarUrl)
                 
             else
                 li
                     a(href="/join")  Join
                 li
-                    a(href="/login")  Login                        
-
-            li
-                a(href="/search") Search
+                    a(href="/login")  Login

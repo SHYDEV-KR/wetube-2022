@@ -1,10 +1,12 @@
 include ../mixins/song
 
 div.chart-grid
-        h4 Melon Top 100 Chart 
-            br
-            small - Updated at #{time.getMonth() + 1}.#{time.getDate()} #{String(time.getHours()).padStart(2, '0')}:00
-        each song in melonChart
-            +song(song)
-        else 
-            li Chart Not Available
+    div.chart-ct
+        div.chart-title
+            span 🔥 Trending Music (Melon) 🔥
+            span.chart-title__time Updated at #{time.getMonth() + 1}.#{time.getDate()} #{String(time.getHours()).padStart(2, '0')}:00
+        div.chart-songs
+            each song in melonChart
+                +song(song)
+            else 
+                li Chart Not Available
