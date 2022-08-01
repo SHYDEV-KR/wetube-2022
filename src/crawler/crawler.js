@@ -76,16 +76,19 @@ const updateChart = async (companyName, result) => {
 
 const checkTimeAndCrawl = async () => {
     let now = new Date();
-    let min = now.getMinutes();
     let sec = now.getSeconds();
     const exists = await Chart.exists({ companyName: 'melon' });
     if (!exists) {
         const result = await crawlMelonChart();
-        saveNewChart('melon', result);
-    } else if ((String(min) === "0" && String(sec) === "10")) {
-            const result = await crawlMelonChart();
-            updateChart('melon', result);
+        return saveNewChart('melon', result);
     }
+    
+    const chart = await Chart.find({ companyName: 'melon' });
+    
+    if (String(chart[0].createdAt.getHours()) !== String(now.getHours()) && sec >= 10) {
+        const result = await crawlMelonChart();
+        return updateChart('melon', result);
+    } 
 }
 
-setInterval(checkTimeAndCrawl, 1000);
+setInterval(checkTimeAndCrawl, 5000);
