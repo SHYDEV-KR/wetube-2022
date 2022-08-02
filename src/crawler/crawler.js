@@ -71,7 +71,7 @@ const updateChart = async (companyName, result) => {
         chart: result,
         createdAt: Date.now(),
     });
-    console.log(`✅ ${companyName} Chart Updated at Hour`, chart.createdAt.getHours());
+    console.log(`✅ ${companyName} Chart Updated at Hour ${chart.createdAt.getHours()}!`);
 }
 
 const checkTimeAndCrawl = async () => {
