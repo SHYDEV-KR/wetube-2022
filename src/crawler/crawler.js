@@ -67,11 +67,11 @@ const saveNewChart = async (companyName, result) => {
 }
 
 const updateChart = async (companyName, result) => {
-    const chart = await Chart.find({ companyName });
-    chart[0].chart = result;
-    chart[0].createdAt = Date.now();
-    await chart[0].save();
-    console.log(`✅ ${companyName} Chart Updated at Hour`, chart[0].createdAt.getHours());
+    const chart = await Chart.findOneAndUpdate({ companyName }, {
+        chart: result,
+        createdAt: Date.now(),
+    });
+    console.log(`✅ ${companyName} Chart Updated at Hour`, chart.createdAt.getHours());
 }
 
 const checkTimeAndCrawl = async () => {
