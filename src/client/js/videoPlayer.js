@@ -137,3 +137,9 @@ fullScreenBtn.addEventListener("click", handleFullscreenBtnClick);
 document.addEventListener('fullscreenchange', handleFullscreenChange);
 videoContainer.addEventListener("mousemove", handleMouseMove);
 videoContainer.addEventListener("mouseleave", handleMouseLeave);
+document.addEventListener('keyup', event => {
+    if (event.code === 'Space') {
+        handlePlayClick();
+    }
+});
+video.addEventListener("click", handlePlayClick);
