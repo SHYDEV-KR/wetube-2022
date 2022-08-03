@@ -70,7 +70,7 @@ const updateChart = async (companyName, result) => {
     const chart = await Chart.findOneAndUpdate({ companyName }, {
         chart: result,
         createdAt: Date.now(),
-    });
+    }, {new: true});
     console.log(`✅ ${companyName} Chart Updated at Hour ${chart.createdAt.getHours()}!`);
 }
 
