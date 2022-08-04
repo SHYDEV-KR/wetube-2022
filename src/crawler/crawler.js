@@ -13,8 +13,13 @@ const crawlMelonChart = async () => {
     };
     
     let body = await getHtml();
-    body = cheerio.load(body.data);
     
+    if (!body) {
+        return crawlMelonChart();
+    }
+    
+    body = cheerio.load(body.data);
+
     const selectorTitle = (x) => {
         return `#lst${x} > td:nth-child(6) > div > div > div.ellipsis.rank01 > span > a`;
     }
