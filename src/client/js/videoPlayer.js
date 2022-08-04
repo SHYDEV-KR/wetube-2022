@@ -17,6 +17,7 @@ let controlsTimeout = null;
 let controlsMovementTimeout = null;
 let volumeValue = 0.5;
 video.volume = volumeValue;
+let watchRecords = new Set();
 
 const handlePlayClick = (e) => {
     if (video.paused) {
@@ -73,7 +74,17 @@ const handleLoadedMetadata = () => {
 const handleTimeUpdate = () => {
     currentTime.innerText = formatTime(Math.floor(video.currentTime));
     timeline.value = Math.floor(video.currentTime);
+    watchRecords.add(Math.floor(video.currentTime));
 };
+
+const handleEnded = () => {
+    const { id } = videoContainer.dataset;
+    if (watchRecords.size / video.duration >= 0.7) {
+        fetch(`/api/videos/${id}/view`, {
+            method: "POST",
+        });
+    }
+}
 
 const handleTimelineChange = (event) => {
     const {
@@ -129,8 +140,9 @@ const handleMouseLeave = () => {
 playBtn.addEventListener("click", handlePlayClick);
 muteBtn.addEventListener("click", handleMuteClick);
 volumeRange.addEventListener("input", handleVolumeChange);
-video.addEventListener("loadeddata", handleLoadedMetadata);
+video.addEventListener("loadedmetadata", handleLoadedMetadata);
 video.addEventListener("timeupdate", handleTimeUpdate);
+video.addEventListener("ended", handleEnded);
 timeline.addEventListener("input", handleTimelineChange);
 speedRange.addEventListener("change", handleSpeedChange);
 fullScreenBtn.addEventListener("click", handleFullscreenBtnClick);
